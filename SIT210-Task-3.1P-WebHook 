@@ -1,0 +1,22 @@
+// This #include statement was automatically added by the Particle IDE.
+#include <HC_SR04.h>
+
+double Data = 0; 
+
+void setup() 
+{
+    Particle.subscribe("hook-response/Distance", myHandler, MY_DEVICES);
+    Spark.variable("cm", &Data, DOUBLE);
+}
+
+void loop() 
+{
+    Data = HC_SR04(D2, D3).getDistanceCM();
+    Particle.publish("Distance", String(Data), PRIVATE);
+    delay(30000);
+} 
+
+void myHandler(const char *event, const char *data) 
+{
+  // Handle the integration response
+}
